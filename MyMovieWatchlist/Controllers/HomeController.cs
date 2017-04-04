@@ -1,7 +1,7 @@
-﻿using System;
+﻿using MyMovieWatchlist.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MyMovieWatchlist.Controllers
@@ -22,9 +22,14 @@ namespace MyMovieWatchlist.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            var getWebApiContent = new GetWebApiContent();
+            var ccc = getWebApiContent.GetValue().Result;
 
-            return View();
+            JObject xavier = JObject.Parse(ccc);
+            var vvv = xavier.SelectToken("Search").ToString();
+
+            List<Movie> movie = (List<Movie>)JsonConvert.DeserializeObject(vvv, typeof(List<Movie>));
+            return View(movie);
         }
     }
 }

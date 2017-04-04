@@ -1,17 +1,37 @@
-﻿@{
+﻿@model IEnumerable<MyMovieWatchlist.Models.Movie>
+@{
     ViewBag.Title = "Contact";
 }
 <h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+@*@Model.Year.ToString()
+    @Model.Title.ToString()
+    @Model.Type.ToString()
+    @Model.imdbID.ToString()
+    @Model.Poster.ToString()*@
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<table id="table_id" class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Title)</th>
+            <th>@Html.DisplayNameFor(model => model.Year)</th>
+            <th>@Html.DisplayNameFor(model => model.Type)</th>
+            <th>@Html.DisplayNameFor(model => model.imdbID)</th>
+            <th>@Html.DisplayNameFor(model => model.Poster)</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.Year)</td>
+                <td>@Html.DisplayFor(modelItem => item.Type)</td>
+                <td>@Html.DisplayFor(modelItem => item.imdbID)</td>
+                <td><img src="@Html.DisplayFor(modelItem => item.Poster)" width="100" /></td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
