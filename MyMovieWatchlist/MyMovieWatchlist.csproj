@@ -125,6 +125,7 @@
     </Compile>
     <Compile Include="Models\GetWebApiContent.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\MovieSearchedListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

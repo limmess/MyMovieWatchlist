@@ -28,6 +28,7 @@
         public string Production { get; set; }
         public string Website { get; set; }
         public string Response { get; set; }
+        public string SelectedForSave { get; set; }
     }
 
     public class Rating

@@ -28,8 +28,19 @@ namespace MyMovieWatchlist.Controllers
             JObject xavier = JObject.Parse(ccc);
             var vvv = xavier.SelectToken("Search").ToString();
 
-            List<Movie> movie = (List<Movie>)JsonConvert.DeserializeObject(vvv, typeof(List<Movie>));
-            return View(movie);
+            List<Movie> movies = (List<Movie>)JsonConvert.DeserializeObject(vvv, typeof(List<Movie>));
+
+            var moviesView = new MovieSearchedListViewModel(movies);
+
+            return View(moviesView);
         }
+
+        [HttpPost]
+        public ActionResult Create(string SelectedMovieImdbId)
+        {
+
+            return View();
+        }
+
     }
 }

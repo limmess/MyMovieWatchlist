@@ -1,37 +1,43 @@
-﻿@model IEnumerable<MyMovieWatchlist.Models.Movie>
+﻿@using MyMovieWatchlist.Models
+@model MyMovieWatchlist.Models.MovieSearchedListViewModel
 @{
     ViewBag.Title = "Contact";
 }
 <h2>@ViewBag.Title.</h2>
 
-@*@Model.Year.ToString()
-    @Model.Title.ToString()
-    @Model.Type.ToString()
-    @Model.imdbID.ToString()
-    @Model.Poster.ToString()*@
 
-<table id="table_id" class="table">
-    <thead>
+@using (Html.BeginForm("Create", "Home"))
+{
+    <table id="table_id" class="table">
+        <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Title)</th>
-            <th>@Html.DisplayNameFor(model => model.Year)</th>
-            <th>@Html.DisplayNameFor(model => model.Type)</th>
-            <th>@Html.DisplayNameFor(model => model.imdbID)</th>
-            <th>@Html.DisplayNameFor(model => model.Poster)</th>
+            <th>Choice</th>
+            <th>@Html.DisplayNameFor(model => model.Movies.FirstOrDefault().Title)</th>
+            <th>@Html.DisplayNameFor(model => model.Movies.FirstOrDefault().Year)</th>
+            <th>@Html.DisplayNameFor(model => model.Movies.FirstOrDefault().Type)</th>
+            <th>@Html.DisplayNameFor(model => model.Movies.FirstOrDefault().imdbID)</th>
+            <th>@Html.DisplayNameFor(model => model.Movies.FirstOrDefault().Poster)</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
+            
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.Movies)
         {
             <tr>
+                <td>@Html.RadioButtonFor(modelItem => Model.SelectedMovieImdbId, item.imdbID, new { id = @item.imdbID })</td>
                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
                 <td>@Html.DisplayFor(modelItem => item.Year)</td>
                 <td>@Html.DisplayFor(modelItem => item.Type)</td>
                 <td>@Html.DisplayFor(modelItem => item.imdbID)</td>
                 <td><img src="@Html.DisplayFor(modelItem => item.Poster)" width="100" /></td>
-                
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit" class="btn btn-default"/>
+        </div>
+    </div>
+}
