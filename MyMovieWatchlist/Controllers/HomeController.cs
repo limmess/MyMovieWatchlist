@@ -1,4 +1,5 @@
 ﻿using MyMovieWatchlist.Models;
+using MyMovieWatchlist.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
@@ -22,14 +23,21 @@ namespace MyMovieWatchlist.Controllers
 
         public ActionResult Contact()
         {
-            var getWebApiContent = new GetWebApiContent();
-            var ccc = getWebApiContent.GetValue().Result;
+            var searchWebApiMoviesByName = new SearchWebApiMoviesByName();
 
-            JObject xavier = JObject.Parse(ccc);
-            var vvv = xavier.SelectToken("Search").ToString();
+            //Gets a search result in JSON (3 objects: Search, totalResults, Response)
+            var searchByNameResultsJson = searchWebApiMoviesByName.GetValue().Result;
 
-            List<Movie> movies = (List<Movie>)JsonConvert.DeserializeObject(vvv, typeof(List<Movie>));
+            //Parce to JSON object
+            JObject searchByNameResultsJsonObject = JObject.Parse(searchByNameResultsJson);
 
+            //Extract from search response movies - Object "Search"
+            var searchByNameResultsString = searchByNameResultsJsonObject.SelectToken("Search").ToString();
+
+            //Deserialize Json to movies list
+            List<Movie> movies = (List<Movie>)JsonConvert.DeserializeObject(searchByNameResultsString, typeof(List<Movie>));
+
+            //Pass movies list to ViewModel -  MovieSearchedListViewModel
             var moviesView = new MovieSearchedListViewModel(movies);
 
             return View(moviesView);
@@ -38,8 +46,16 @@ namespace MyMovieWatchlist.Controllers
         [HttpPost]
         public ActionResult Create(string SelectedMovieImdbId)
         {
+            var searchWebApiMovieByImdbId = new SearchWebApiMovieByImdbId();
+            var selectedMovieJsonString = searchWebApiMovieByImdbId.GetValue(SelectedMovieImdbId).Result;
 
-            return View();
+            //Deserialize Json to movie
+            Movie movie = (Movie)JsonConvert.DeserializeObject(selectedMovieJsonString, typeof(Movie));
+
+            //Pass movies list to ViewModel -  MovieSearchedListViewModel
+            var movieView = new SelectedMovieDetailsViewModel(movie);
+
+            return View("SelectedMovieDetails", movieView);
         }
 
     }

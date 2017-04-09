@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using MyMovieWatchlist.Models;
+using System.Collections.Generic;
 
-namespace MyMovieWatchlist.Models
+namespace MyMovieWatchlist.ViewModels
 {
     public class MovieSearchedListViewModel
     {

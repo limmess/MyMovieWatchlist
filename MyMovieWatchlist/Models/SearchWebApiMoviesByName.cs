@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace MyMovieWatchlist.Models
 {
-    public class GetWebApiContent
+    public class SearchWebApiMoviesByName
     {
-        private readonly string _uri = ConfigurationManager.ConnectionStrings["MovieWebApi"].ConnectionString;
+        private readonly string _uri = ConfigurationManager.ConnectionStrings["SearchWebApiMoviesByName"].ConnectionString;
 
         public async Task<string> GetValue()
         {
@@ -14,6 +14,7 @@ namespace MyMovieWatchlist.Models
             HttpResponseMessage response = await client.GetAsync(_uri).ConfigureAwait(continueOnCapturedContext: false);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
+            client.Dispose();
             return responseBody;
         }
     }

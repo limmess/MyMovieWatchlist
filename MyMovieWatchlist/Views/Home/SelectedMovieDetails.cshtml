@@ -1,0 +1,113 @@
+﻿@model MyMovieWatchlist.ViewModels.SelectedMovieDetailsViewModel
+
+@{
+    ViewBag.Title = "SelectedMovieDetails";
+}
+
+<h2>SelectedMovieDetails</h2>
+
+<div>
+    <img alt="movie poster" src="@Html.DisplayFor(m => Model.Poster)" width="200" />
+</div>
+
+<div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Title)</td>
+                <td>@Html.DisplayFor(m => Model.Title)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Year)</td>
+                <td>@Html.DisplayFor(m => Model.Year)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Rated)</td>
+                <td>@Html.DisplayFor(m => Model.Rated)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Released)</td>
+                <td>@Html.DisplayFor(m => Model.Released)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Runtime)</td>
+                <td>@Html.DisplayFor(m => Model.Runtime)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Genre)</td>
+                <td>@Html.DisplayFor(m => Model.Genre)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Director)</td>
+                <td>@Html.DisplayFor(m => Model.Director)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Writer)</td>
+                <td>@Html.DisplayFor(m => Model.Writer)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Actors)</td>
+                <td>@Html.DisplayFor(m => Model.Actors)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Plot)</td>
+                <td>@Html.DisplayFor(m => Model.Plot)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Language)</td>
+                <td>@Html.DisplayFor(m => Model.Language)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Country)</td>
+                <td>@Html.DisplayFor(m => Model.Country)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Awards)</td>
+                <td>@Html.DisplayFor(m => Model.Awards)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Metascore)</td>
+                <td>@Html.DisplayFor(m => Model.Metascore)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.imdbRating)</td>
+                <td>@Html.DisplayFor(m => Model.imdbRating)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.imdbVotes)</td>
+                <td>@Html.DisplayFor(m => Model.imdbVotes)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.imdbID)</td>
+                <td>@Html.DisplayFor(m => Model.imdbID)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Type)</td>
+                <td>@Html.DisplayFor(m => Model.Type)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.DVD)</td>
+                <td>@Html.DisplayFor(m => Model.DVD)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.BoxOffice)</td>
+                <td>@Html.DisplayFor(m => Model.BoxOffice)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Production)</td>
+                <td>@Html.DisplayFor(m => Model.Production)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(m => Model.Website)</td>
+                <td>
+                    <a href="@Html.DisplayFor(m => Model.Website)" target="blank">@Html.DisplayFor(m => Model.Website)</a>
+                    
+            </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

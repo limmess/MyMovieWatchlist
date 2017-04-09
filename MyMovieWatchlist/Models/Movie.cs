@@ -1,8 +1,10 @@
 ﻿namespace MyMovieWatchlist.Models
-{
 
+{
     public class Movie
     {
+        public int Id { get; set; }
+        public int ParentId { get; set; }
         public string Title { get; set; }
         public string Year { get; set; }
         public string Rated { get; set; }
@@ -36,6 +38,4 @@
         public string Source { get; set; }
         public string Value { get; set; }
     }
-
-
 }

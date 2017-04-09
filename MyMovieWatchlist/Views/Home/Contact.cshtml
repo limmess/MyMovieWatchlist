@@ -1,5 +1,4 @@
-﻿@using MyMovieWatchlist.Models
-@model MyMovieWatchlist.Models.MovieSearchedListViewModel
+﻿@model MyMovieWatchlist.ViewModels.MovieSearchedListViewModel
 @{
     ViewBag.Title = "Contact";
 }
@@ -8,6 +7,12 @@
 
 @using (Html.BeginForm("Create", "Home"))
 {
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit" class="btn btn-default" />
+        </div>
+    </div>
+
     <table id="table_id" class="table">
         <thead>
         <tr>
