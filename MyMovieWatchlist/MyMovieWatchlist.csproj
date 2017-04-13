@@ -137,7 +137,24 @@
     <Compile Include="Migrations\201704091442089_InitialCreate.Designer.cs">
       <DependentUpon>201704091442089_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704101934583_RemoveCooupleMovieProperties.cs" />
+    <Compile Include="Migrations\201704101934583_RemoveCooupleMovieProperties.Designer.cs">
+      <DependentUpon>201704101934583_RemoveCooupleMovieProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704121833249_ChangeMovieModel.cs" />
+    <Compile Include="Migrations\201704121833249_ChangeMovieModel.Designer.cs">
+      <DependentUpon>201704121833249_ChangeMovieModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704121836239_ChangeMovieModelRemoveMetascore.cs" />
+    <Compile Include="Migrations\201704121836239_ChangeMovieModelRemoveMetascore.Designer.cs">
+      <DependentUpon>201704121836239_ChangeMovieModelRemoveMetascore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704121841509_ChangeMovieModelParentIDNullable.cs" />
+    <Compile Include="Migrations\201704121841509_ChangeMovieModelParentIDNullable.Designer.cs">
+      <DependentUpon>201704121841509_ChangeMovieModelParentIDNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\SearchWebApiMovieByImdbIdToList.cs" />
     <Compile Include="Models\SearchWebApiMovieByImdbId.cs" />
     <Compile Include="Models\SearchWebApiMoviesByName.cs" />
     <Compile Include="Models\Movie.cs" />
@@ -202,6 +219,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704091442089_InitialCreate.resx">
       <DependentUpon>201704091442089_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704101934583_RemoveCooupleMovieProperties.resx">
+      <DependentUpon>201704101934583_RemoveCooupleMovieProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704121833249_ChangeMovieModel.resx">
+      <DependentUpon>201704121833249_ChangeMovieModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704121836239_ChangeMovieModelRemoveMetascore.resx">
+      <DependentUpon>201704121836239_ChangeMovieModelRemoveMetascore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704121841509_ChangeMovieModelParentIDNullable.resx">
+      <DependentUpon>201704121841509_ChangeMovieModelParentIDNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

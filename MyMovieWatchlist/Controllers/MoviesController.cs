@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using MyMovieWatchlist.DAL;
+using MyMovieWatchlist.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using MyMovieWatchlist.DAL;
-using MyMovieWatchlist.Models;
 
 namespace MyMovieWatchlist.Controllers
 {
     public class MoviesController : Controller
     {
-        private MovieDBContext db = new MovieDBContext();
+        private readonly MovieDBContext db = new MovieDBContext();
 
         // GET: Movies
         public ActionResult Index()

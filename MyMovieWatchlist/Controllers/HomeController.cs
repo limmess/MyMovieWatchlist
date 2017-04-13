@@ -1,17 +1,33 @@
-﻿using MyMovieWatchlist.Models;
+﻿using MyMovieWatchlist.DAL;
+using MyMovieWatchlist.Models;
 using MyMovieWatchlist.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace MyMovieWatchlist.Controllers
 {
     public class HomeController : Controller
     {
+        private MovieDBContext db = new MovieDBContext();
+
         public ActionResult Index()
         {
-            return View();
+            var fff = new SearchWebApiMovieByImdbIdToList();
+
+            var dbMovieList = db.Movies.ToList();
+            var jsonMovieListFromWebApi = fff.GetValue(dbMovieList).Result;
+            List<Movie> moviesView = new List<Movie>();
+
+            foreach (var c in jsonMovieListFromWebApi)
+            {
+                Movie movie = (Movie)JsonConvert.DeserializeObject(c, typeof(Movie));
+                moviesView.Add(movie);
+            }
+
+            return View(moviesView);
         }
 
         public ActionResult About()
@@ -44,7 +60,7 @@ namespace MyMovieWatchlist.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(string SelectedMovieImdbId)
+        public ActionResult SelectedMovie(string SelectedMovieImdbId)
         {
             var searchWebApiMovieByImdbId = new SearchWebApiMovieByImdbId();
             var selectedMovieJsonString = searchWebApiMovieByImdbId.GetValue(SelectedMovieImdbId).Result;
@@ -58,5 +74,22 @@ namespace MyMovieWatchlist.Controllers
             return View("SelectedMovieDetails", movieView);
         }
 
+        // POST: Movies/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Movies.Add(movie);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(movie);
+        }
     }
 }
+
+//[Bind(Include = "Id,ParentId,Title,Year,Rated,Released,Runtime,Genre,Director,Writer,Actors,Plot,Language,Country,Awards,Poster,Metascore,imdbRating,imdbVotes,imdbID,Type,DVD,BoxOffice,Production,Website,Response,SelectedForSave")]

@@ -33,7 +33,7 @@ namespace MyMovieWatchlist.ViewModels
             Website = movie.Website;
         }
         public int Id { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
         public string Title { get; set; }
         public string Year { get; set; }
         public string Rated { get; set; }

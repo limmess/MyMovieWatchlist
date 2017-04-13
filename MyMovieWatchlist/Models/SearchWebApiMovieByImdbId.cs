@@ -17,6 +17,7 @@ namespace MyMovieWatchlist.Models
             HttpResponseMessage response = await client.GetAsync(builtUri).ConfigureAwait(continueOnCapturedContext: false);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
+            client.Dispose();
             return responseBody;
         }
     }
