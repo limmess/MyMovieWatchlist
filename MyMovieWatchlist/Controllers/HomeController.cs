@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace MyMovieWatchlist.Controllers
@@ -24,7 +25,9 @@ namespace MyMovieWatchlist.Controllers
             foreach (var c in jsonMovieListFromWebApi)
             {
                 Movie movie = (Movie)JsonConvert.DeserializeObject(c, typeof(Movie));
+                movie.Id = dbMovieList.Find(m => m.imdbID == movie.imdbID).Id;
                 moviesView.Add(movie);
+
             }
 
             return View(moviesView);
@@ -35,6 +38,21 @@ namespace MyMovieWatchlist.Controllers
             ViewBag.Message = "Your application description page.";
 
             return View();
+        }
+
+        [Route("Home/Movie/{SelectedMovieImdbId}")]
+        public ActionResult Movie(string SelectedMovieImdbId)
+        {
+            var searchWebApiMovieByImdbId = new SearchWebApiMovieByImdbId();
+            var selectedMovieJsonString = searchWebApiMovieByImdbId.GetValue(SelectedMovieImdbId).Result;
+
+            //Deserialize Json to movie
+            Movie movie = (Movie)JsonConvert.DeserializeObject(selectedMovieJsonString, typeof(Movie));
+
+            //Pass movies list to ViewModel -  MovieSearchedListViewModel
+            var movieView = new SelectedMovieDetailsViewModel(movie);
+
+            return View("Movie", movieView);
         }
 
         public ActionResult Contact()
@@ -51,7 +69,8 @@ namespace MyMovieWatchlist.Controllers
             var searchByNameResultsString = searchByNameResultsJsonObject.SelectToken("Search").ToString();
 
             //Deserialize Json to movies list
-            List<Movie> movies = (List<Movie>)JsonConvert.DeserializeObject(searchByNameResultsString, typeof(List<Movie>));
+            List<Movie> movies =
+                (List<Movie>)JsonConvert.DeserializeObject(searchByNameResultsString, typeof(List<Movie>));
 
             //Pass movies list to ViewModel -  MovieSearchedListViewModel
             var moviesView = new MovieSearchedListViewModel(movies);
@@ -88,6 +107,32 @@ namespace MyMovieWatchlist.Controllers
             }
 
             return View(movie);
+        }
+
+        // GET: Movies/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Movie movie = db.Movies.Find(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            return View(movie);
+        }
+
+        // POST: Movies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Movie movie = db.Movies.Find(id);
+            db.Movies.Remove(movie);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
