@@ -206,6 +206,7 @@
     <Content Include="Views\Home\SelectedMovieDetails.cshtml" />
     <Content Include="Views\Home\Movie.cshtml" />
     <Content Include="Views\Home\Delete.cshtml" />
+    <Content Include="Views\Home\SearchResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

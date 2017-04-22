@@ -7,8 +7,18 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm())
+    {
+        <div>
+            Search Movie
+        </div>
+
+        @Html.TextBox("search")
+
+        <input type="submit" value="Search" class="btn btn-default" />
+    }
 </p>
+
 <table class="table">
     <tr>
         <th>
