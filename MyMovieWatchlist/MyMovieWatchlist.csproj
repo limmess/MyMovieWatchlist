@@ -154,6 +154,7 @@
       <DependentUpon>201704121841509_ChangeMovieModelParentIDNullable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ParseJsonToMoviesList.cs" />
     <Compile Include="Models\SearchWebApiMovieByImdbIdToList.cs" />
     <Compile Include="Models\SearchWebApiMovieByImdbId.cs" />
     <Compile Include="Models\SearchWebApiMoviesByName.cs" />
@@ -195,8 +196,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Movies\Create.cshtml" />
     <Content Include="Views\Movies\Delete.cshtml" />

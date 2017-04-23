@@ -14,22 +14,26 @@ namespace MyMovieWatchlist.Controllers
     {
         private MovieDBContext db = new MovieDBContext();
 
+        SearchWebApiMoviesByName searchWebApiMoviesByName = new SearchWebApiMoviesByName();
+        ParseJsonToMoviesList parseJsonToMoviesList = new ParseJsonToMoviesList();
+
         [HttpPost]
         public ActionResult Index(string search)
         {
-            var searchWebApiMoviesByName = new SearchWebApiMoviesByName();
-
+            //var searchWebApiMoviesByName = new SearchWebApiMoviesByName();
             //Gets a search result in JSON (3 objects: Search, totalResults, Response)
+
             var searchByNameResultsJson = searchWebApiMoviesByName.GetValue(search).Result;
+            var movies = parseJsonToMoviesList.Parse(searchByNameResultsJson);
 
-            //Parce to JSON object
-            JObject searchByNameResultsJsonObject = JObject.Parse(searchByNameResultsJson);
+            ////Parse to JSON object
+            //JObject searchByNameResultsJsonObject = JObject.Parse(searchByNameResultsJson);
 
-            //Extract from search response movies - Object "Search"
-            var searchByNameResultsString = searchByNameResultsJsonObject.SelectToken("Search").ToString();
+            ////Extract from search response movies - Object "Search"
+            //var searchByNameResultsString = searchByNameResultsJsonObject.SelectToken("Search").ToString();
 
-            //Deserialize Json to movies list
-            List<Movie> movies = (List<Movie>)JsonConvert.DeserializeObject(searchByNameResultsString, typeof(List<Movie>));
+            ////Deserialize Json to movies list
+            //List<Movie> movies = (List<Movie>)JsonConvert.DeserializeObject(searchByNameResultsString, typeof(List<Movie>));
 
             //Pass movies list to ViewModel -  MovieSearchedListViewModel
             var moviesView = new MovieSearchedListViewModel(movies);
@@ -55,12 +59,6 @@ namespace MyMovieWatchlist.Controllers
             return View(moviesView);
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
 
         [Route("Home/Movie/{SelectedMovieImdbId}")]
         public ActionResult Movie(string SelectedMovieImdbId)
@@ -77,27 +75,7 @@ namespace MyMovieWatchlist.Controllers
             return View("Movie", movieView);
         }
 
-        public ActionResult Contact()
-        {
-            var searchWebApiMoviesByName = new SearchWebApiMoviesByName();
-
-            //Gets a search result in JSON (3 objects: Search, totalResults, Response)
-            var searchByNameResultsJson = searchWebApiMoviesByName.GetValue("king").Result;
-
-            //Parce to JSON object
-            JObject searchByNameResultsJsonObject = JObject.Parse(searchByNameResultsJson);
-
-            //Extract from search response movies - Object "Search"
-            var searchByNameResultsString = searchByNameResultsJsonObject.SelectToken("Search").ToString();
-
-            //Deserialize Json to movies list
-            List<Movie> movies = (List<Movie>)JsonConvert.DeserializeObject(searchByNameResultsString, typeof(List<Movie>));
-
-            //Pass movies list to ViewModel -  MovieSearchedListViewModel
-            var moviesView = new MovieSearchedListViewModel(movies);
-
-            return View(moviesView);
-        }
+        
 
         [HttpPost]
         public ActionResult SelectedMovie(string SelectedMovieImdbId)

@@ -12,7 +12,7 @@ namespace MyMovieWatchlist.Models
         private readonly string _uri = ConfigurationManager.ConnectionStrings["SearchWebApiMovieByImdbId"].ConnectionString;
 
         /// <summary>
-        /// Reads Movies imdbId from database and gets from Web API all movies info in JSON into List
+        /// Takes Movies imdbId's from database and gets from Web API all movies info in JSON into List
         /// </summary>
         /// <param name="movieList">List of Movies in database</param>
         /// <returns>Movies list in JSON</returns>
