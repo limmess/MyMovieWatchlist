@@ -154,11 +154,17 @@
       <DependentUpon>201704121841509_ChangeMovieModelParentIDNullable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ParseJsonToMoviesList.cs" />
+    <Compile Include="Models\ConvertJsonMovieList.cs" />
+    <Compile Include="Models\ExtractionResult.cs" />
+    <Compile Include="Services\ExtractionService.cs" />
+    <Compile Include="Interfaces\IMoviesRepository.cs" />
+    <Compile Include="Models\ParseSearchResultToMoviesList.cs" />
+    <Compile Include="Models\ReadMoviesFromApiToMoviesList.cs" />
     <Compile Include="Models\SearchWebApiMovieByImdbIdToList.cs" />
     <Compile Include="Models\SearchWebApiMovieByImdbId.cs" />
     <Compile Include="Models\SearchWebApiMoviesByName.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Impl\SqlMovieRepository.cs" />
     <Compile Include="ViewModels\MovieSearchedListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SelectedMovieDetailsViewModel.cs" />

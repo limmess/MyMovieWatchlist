@@ -9,7 +9,7 @@ namespace MyMovieWatchlist.Models
     {
         private readonly string _uri = ConfigurationManager.ConnectionStrings["SearchWebApiMovieByImdbId"].ConnectionString;
 
-        public async Task<string> GetValue(string imdbId)
+        public async Task<string> GetMovie(string imdbId)
         {
             var uri = new StringBuilder(_uri);
             var builtUri = uri.Append(imdbId).ToString();
