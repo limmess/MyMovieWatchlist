@@ -133,8 +133,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Impl\OmdbMovieRepository.cs" />
-    <Compile Include="Interfaces\IMovieImdbId.cs" />
+    <Compile Include="Impl\Helpers\SearchWebApiMovieByImdbId.cs" />
+    <Compile Include="Impl\OmdbMovieFromWebByImdbId.cs" />
+    <Compile Include="Interfaces\IMovieFromWebByImdbId.cs" />
     <Compile Include="Migrations\201704091442089_InitialCreate.cs" />
     <Compile Include="Migrations\201704091442089_InitialCreate.Designer.cs">
       <DependentUpon>201704091442089_InitialCreate.cs</DependentUpon>
@@ -158,17 +159,15 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ConvertJsonMovieList.cs" />
     <Compile Include="Models\ExtractionResult.cs" />
-    <Compile Include="Models\SearchImdbIdResult.cs" />
-    <Compile Include="Services\ExtractionService.cs" />
+    <Compile Include="Services\ExtractAllService.cs" />
     <Compile Include="Interfaces\IMoviesRepository.cs" />
     <Compile Include="Models\ParseSearchResultToMoviesList.cs" />
     <Compile Include="Models\ReadMoviesFromApiToMoviesList.cs" />
-    <Compile Include="Models\SearchWebApiMovieByImdbIdToList.cs" />
-    <Compile Include="Models\SearchWebApiMovieByImdbId.cs" />
     <Compile Include="Models\SearchWebApiMoviesByName.cs" />
     <Compile Include="Models\Movie.cs" />
-    <Compile Include="Impl\SqlMovieRepository.cs" />
-    <Compile Include="Services\GetMovieByImdbIdService.cs" />
+    <Compile Include="Impl\SqlMoviesRepository.cs" />
+    <Compile Include="Services\ExtractOneService.cs" />
+    <Compile Include="Services\Helpers\SearchWebApiMovieByImdbIdToList.cs" />
     <Compile Include="ViewModels\MovieSearchedListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SelectedMovieDetailsViewModel.cs" />

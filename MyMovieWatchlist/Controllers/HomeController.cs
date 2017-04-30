@@ -1,8 +1,7 @@
 ﻿using MyMovieWatchlist.DAL;
-using MyMovieWatchlist.Impl;
 using MyMovieWatchlist.Models;
+using MyMovieWatchlist.Services;
 using MyMovieWatchlist.ViewModels;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
@@ -12,43 +11,36 @@ namespace MyMovieWatchlist.Controllers
     public class HomeController : Controller
     {
         private MovieDBContext db = new MovieDBContext();
+        private ExtractAllService myServiceAll = new ExtractAllService();
+        private ExtractOneService myServiceOne = new ExtractOneService();
         private SearchWebApiMoviesByName searchWebApiMoviesByName = new SearchWebApiMoviesByName();
-        private ParseSearchResultToMoviesList _parseSearchResultToMoviesList = new ParseSearchResultToMoviesList();
-        private SearchWebApiMovieByImdbIdToList searchWebApiMovieByImdbIdToList = new SearchWebApiMovieByImdbIdToList();
-        private OmdbMovieRepository omdbMovieRepository = new OmdbMovieRepository();
+        private ParseSearchResultToMoviesList parseSearchResultToMoviesList = new ParseSearchResultToMoviesList();
 
         [HttpPost]
         public ActionResult Index(string search)
         {
             //Search  movie. Result JSON (3 objects: Search, totalResults, Response)
-            var searchByNameResultsJson = searchWebApiMoviesByName.GetValue(search).Result;
+            string searchByNameResultsJson = searchWebApiMoviesByName.GetValue(search).Result;
 
             //Converts JSON search result to movie list
-            var movies = _parseSearchResultToMoviesList.Parse(searchByNameResultsJson);
+            List<Movie> movies = parseSearchResultToMoviesList.Parse(searchByNameResultsJson);
 
             //Pass movies list to ViewModel -  MovieSearchedListViewModel
-            var moviesView = new MovieSearchedListViewModel(movies);
+            MovieSearchedListViewModel moviesView = new MovieSearchedListViewModel(movies);
 
             return View("SearchResult", moviesView);
         }
 
         public ActionResult Index()
         {
-            SqlMovieRepository sqlMovieRepository = new SqlMovieRepository();
-            List<Movie> dbMovieList = (List<Movie>)sqlMovieRepository.List();
-
-            List<string> jsonMovieListFromWebApi = searchWebApiMovieByImdbIdToList.GetValue(dbMovieList).Result;
-
-            ConvertJsonMovieList convertJsonMovieList = new ConvertJsonMovieList();
-            List<Movie> moviesView = convertJsonMovieList.Convert(jsonMovieListFromWebApi);
-
+            List<Movie> moviesView = myServiceAll.ExtractAll();
             return View(moviesView);
         }
 
         [Route("Home/Movie/{SelectedMovieImdbId}")]
         public ActionResult Movie(string SelectedMovieImdbId)
         {
-            Movie movie = omdbMovieRepository.GetMovie(SelectedMovieImdbId);
+            Movie movie = myServiceOne.ExtractOne(SelectedMovieImdbId);
             SelectedMovieDetailsViewModel movieView = new SelectedMovieDetailsViewModel(movie);
             return View("Movie", movieView);
         }
@@ -56,15 +48,8 @@ namespace MyMovieWatchlist.Controllers
         [HttpPost]
         public ActionResult SelectedMovie(string SelectedMovieImdbId)
         {
-            SearchWebApiMovieByImdbId searchWebApiMovieByImdbId = new SearchWebApiMovieByImdbId();
-            string selectedMovieJsonString = searchWebApiMovieByImdbId.GetMovie(SelectedMovieImdbId).Result;
-
-            //Deserialize Json to movie
-            Movie movie = (Movie)JsonConvert.DeserializeObject(selectedMovieJsonString, typeof(Movie));
-
-            //Pass movies list to ViewModel -  MovieSearchedListViewModel
+            Movie movie = myServiceOne.ExtractOne(SelectedMovieImdbId);
             SelectedMovieDetailsViewModel movieView = new SelectedMovieDetailsViewModel(movie);
-
             return View("SelectedMovieDetails", movieView);
         }
 

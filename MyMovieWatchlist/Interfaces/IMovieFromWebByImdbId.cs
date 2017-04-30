@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MyMovieWatchlist.Interfaces
 {
-    public interface IMovieImdbId
+    public interface IMovieFromWebByImdbId
     {
         Movie GetMovie(string imdbId);
     }

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace MyMovieWatchlist.Impl
 {
-    public class OmdbMovieRepository : IMovieImdbId
+    public class OmdbMovieFromWebByImdbId : IMovieFromWebByImdbId
 
     {
         public Movie GetMovie(string imdbId)

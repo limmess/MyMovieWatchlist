@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MyMovieWatchlist.Impl
 {
-    public class SqlMovieRepository : IMoviesRepository
+    public class SqlMoviesRepository : IMoviesRepository
     {
         public IEnumerable<Movie> List()
         {
