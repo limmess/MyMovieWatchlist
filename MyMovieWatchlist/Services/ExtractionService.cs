@@ -20,7 +20,7 @@ namespace MyMovieWatchlist.Services
 
         public ExtractionResult Extract()
         {
-            var result = new ExtractionResult { Movies = _moviesRepository.List() };
+            ExtractionResult result = new ExtractionResult { Movies = _moviesRepository.List() };
             return result;
         }
     }

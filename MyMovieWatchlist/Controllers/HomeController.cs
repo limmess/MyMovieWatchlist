@@ -15,6 +15,7 @@ namespace MyMovieWatchlist.Controllers
         private SearchWebApiMoviesByName searchWebApiMoviesByName = new SearchWebApiMoviesByName();
         private ParseSearchResultToMoviesList _parseSearchResultToMoviesList = new ParseSearchResultToMoviesList();
         private SearchWebApiMovieByImdbIdToList searchWebApiMovieByImdbIdToList = new SearchWebApiMovieByImdbIdToList();
+        private OmdbMovieRepository omdbMovieRepository = new OmdbMovieRepository();
 
         [HttpPost]
         public ActionResult Index(string search)
@@ -33,23 +34,13 @@ namespace MyMovieWatchlist.Controllers
 
         public ActionResult Index()
         {
-            //var dbMovieList = db.Movies.ToList();
-            var sqlMovieRepository = new SqlMovieRepository();
-            var dbMovieList1 = (List<Movie>)sqlMovieRepository.List();
+            SqlMovieRepository sqlMovieRepository = new SqlMovieRepository();
+            List<Movie> dbMovieList = (List<Movie>)sqlMovieRepository.List();
 
-            var jsonMovieListFromWebApi = searchWebApiMovieByImdbIdToList.GetValue(dbMovieList1).Result;
+            List<string> jsonMovieListFromWebApi = searchWebApiMovieByImdbIdToList.GetValue(dbMovieList).Result;
 
-            var convertJsonMovieList = new ConvertJsonMovieList();
-            var moviesView = convertJsonMovieList.Convert(jsonMovieListFromWebApi);
-
-            //List<Movie> moviesView = new List<Movie>();
-
-            //foreach (var c in jsonMovieListFromWebApi)
-            //{
-            //    Movie movie = (Movie)JsonConvert.DeserializeObject(c, typeof(Movie));
-            //    movie.Id = dbMovieList.Find(m => m.imdbID == movie.imdbID).Id;
-            //    moviesView.Add(movie);
-            //}
+            ConvertJsonMovieList convertJsonMovieList = new ConvertJsonMovieList();
+            List<Movie> moviesView = convertJsonMovieList.Convert(jsonMovieListFromWebApi);
 
             return View(moviesView);
         }
@@ -57,29 +48,22 @@ namespace MyMovieWatchlist.Controllers
         [Route("Home/Movie/{SelectedMovieImdbId}")]
         public ActionResult Movie(string SelectedMovieImdbId)
         {
-            var searchWebApiMovieByImdbId = new SearchWebApiMovieByImdbId();
-            var selectedMovieJsonString = searchWebApiMovieByImdbId.GetMovie(SelectedMovieImdbId).Result;
-
-            //Deserialize Json to movie
-            Movie movie = (Movie)JsonConvert.DeserializeObject(selectedMovieJsonString, typeof(Movie));
-
-            //Pass movies list to ViewModel -  MovieSearchedListViewModel
-            var movieView = new SelectedMovieDetailsViewModel(movie);
-
+            Movie movie = omdbMovieRepository.GetMovie(SelectedMovieImdbId);
+            SelectedMovieDetailsViewModel movieView = new SelectedMovieDetailsViewModel(movie);
             return View("Movie", movieView);
         }
 
         [HttpPost]
         public ActionResult SelectedMovie(string SelectedMovieImdbId)
         {
-            var searchWebApiMovieByImdbId = new SearchWebApiMovieByImdbId();
-            var selectedMovieJsonString = searchWebApiMovieByImdbId.GetMovie(SelectedMovieImdbId).Result;
+            SearchWebApiMovieByImdbId searchWebApiMovieByImdbId = new SearchWebApiMovieByImdbId();
+            string selectedMovieJsonString = searchWebApiMovieByImdbId.GetMovie(SelectedMovieImdbId).Result;
 
             //Deserialize Json to movie
             Movie movie = (Movie)JsonConvert.DeserializeObject(selectedMovieJsonString, typeof(Movie));
 
             //Pass movies list to ViewModel -  MovieSearchedListViewModel
-            var movieView = new SelectedMovieDetailsViewModel(movie);
+            SelectedMovieDetailsViewModel movieView = new SelectedMovieDetailsViewModel(movie);
 
             return View("SelectedMovieDetails", movieView);
         }

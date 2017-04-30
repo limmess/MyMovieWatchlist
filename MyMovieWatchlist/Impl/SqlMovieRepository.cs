@@ -10,7 +10,7 @@ namespace MyMovieWatchlist.Impl
     {
         public IEnumerable<Movie> List()
         {
-            using (var db = new MovieDBContext())
+            using (MovieDBContext db = new MovieDBContext())
             {
                 return db.Movies.ToList();
             }
