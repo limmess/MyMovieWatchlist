@@ -9,8 +9,8 @@ namespace MyMovieWatchlist.Models
 
         public static ExtractionResult Extract()
         {
-            var myService = new ExtractAllService();
-            _extractionResult = myService.Extract();
+            var myService = new DatabaseService();
+            _extractionResult = myService.ReadAllMoviesFromDatabase();
             return _extractionResult;
         }
     }

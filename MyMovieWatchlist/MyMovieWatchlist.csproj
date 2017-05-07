@@ -159,7 +159,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ConvertJsonMovieList.cs" />
     <Compile Include="Models\ExtractionResult.cs" />
-    <Compile Include="Services\ExtractAllService.cs" />
+    <Compile Include="Services\DatabaseService.cs" />
     <Compile Include="Interfaces\IMoviesRepository.cs" />
     <Compile Include="Models\ParseSearchResultToMoviesList.cs" />
     <Compile Include="Models\ReadMoviesFromApiToMoviesList.cs" />

@@ -17,10 +17,10 @@ namespace MyMovieWatchlist.Models
             JObject jObject = JObject.Parse(jsonString);
 
             //Extract from search response movies - Object "Search"
-            var MoviesInJsonFormat = jObject.SelectToken("Search").ToString();
+            string moviesInJsonFormat = jObject.SelectToken("Search").ToString();
 
             //Deserialize Json to movies list
-            List<Movie> movies = (List<Movie>)JsonConvert.DeserializeObject(MoviesInJsonFormat, typeof(List<Movie>));
+            List<Movie> movies = (List<Movie>)JsonConvert.DeserializeObject(moviesInJsonFormat, typeof(List<Movie>));
 
             return movies;
         }

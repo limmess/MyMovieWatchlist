@@ -19,7 +19,7 @@ namespace MyMovieWatchlist.Services
 
         public Movie ExtractOne(string imdbId)
         {
-            var movie = _movieFromWebByImdbId.GetMovie(imdbId);
+            Movie movie = _movieFromWebByImdbId.GetMovie(imdbId);
             return movie;
         }
     }
