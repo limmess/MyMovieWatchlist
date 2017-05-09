@@ -1,7 +1,7 @@
-﻿using MyMovieWatchlist.DAL;
-using MyMovieWatchlist.Models;
+﻿using MyMovieWatchlist.Models;
 using MyMovieWatchlist.Services;
 using MyMovieWatchlist.ViewModels;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
@@ -10,17 +10,24 @@ namespace MyMovieWatchlist.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly MovieDBContext _db = new MovieDBContext();
+        private readonly WebApiService _myWebApiService = new WebApiService();
         private readonly DatabaseService _myDatabaseService = new DatabaseService();
-        private readonly ExtractOneService _myServiceOne = new ExtractOneService();
-        private readonly SearchWebApiMoviesByName _searchWebApiMoviesByName = new SearchWebApiMoviesByName();
         private readonly ParseSearchResultToMoviesList _parseSearchResultToMoviesList = new ParseSearchResultToMoviesList();
+
+        public ActionResult Index()
+        {
+            IEnumerable<Movie> tt = _myDatabaseService.ReadAllMoviesFromDatabase1();
+            IEnumerable<string> yy = _myWebApiService.AddMoviesInfo(tt);
+            List<Movie> moviesView = _myDatabaseService.ReadAllMoviesFromDatabaseAddWebApiInfo();
+            return View(moviesView);
+        }
 
         [HttpPost]
         public ActionResult Index(string search)
         {
             //Search  movie. Result JSON (3 objects: Search, totalResults, Response)
-            string searchByNameResultsJson = _searchWebApiMoviesByName.GetValue(search).Result;
+            string searchByNameResultsJson = _myWebApiService.SearchMovieByName(search);
+
 
             //Converts JSON search result to movie list
             List<Movie> movies = _parseSearchResultToMoviesList.Parse(searchByNameResultsJson);
@@ -31,16 +38,11 @@ namespace MyMovieWatchlist.Controllers
             return View("SearchResult", moviesView);
         }
 
-        public ActionResult Index()
-        {
-            List<Movie> moviesView = _myDatabaseService.ReadAllMoviesFromDatabaseAddWebApiInfo();
-            return View(moviesView);
-        }
-
         [Route("Home/Movie/{SelectedMovieImdbId}")]
         public ActionResult Movie(string SelectedMovieImdbId)
         {
-            Movie movie = _myServiceOne.ExtractOne(SelectedMovieImdbId);
+            string searchResult = _myWebApiService.SearchMovieByImdbId(SelectedMovieImdbId);
+            Movie movie = (Movie)JsonConvert.DeserializeObject(searchResult, typeof(Movie));
             SelectedMovieDetailsViewModel movieView = new SelectedMovieDetailsViewModel(movie);
             return View("Movie", movieView);
         }
@@ -48,7 +50,9 @@ namespace MyMovieWatchlist.Controllers
         [HttpPost]
         public ActionResult SelectedMovie(string SelectedMovieImdbId)
         {
-            Movie movie = _myServiceOne.ExtractOne(SelectedMovieImdbId);
+
+            string searchResult = _myWebApiService.SearchMovieByImdbId(SelectedMovieImdbId);
+            Movie movie = (Movie)JsonConvert.DeserializeObject(searchResult, typeof(Movie));
             SelectedMovieDetailsViewModel movieView = new SelectedMovieDetailsViewModel(movie);
             return View("SelectedMovieDetails", movieView);
         }

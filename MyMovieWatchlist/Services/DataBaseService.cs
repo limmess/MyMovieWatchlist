@@ -9,7 +9,7 @@ namespace MyMovieWatchlist.Services
     {
         private readonly IMoviesRepository _moviesRepository;
 
-        private DatabaseService(IMoviesRepository moviesRepository)
+        public DatabaseService(IMoviesRepository moviesRepository)
         {
             _moviesRepository = moviesRepository;
         }
@@ -54,13 +54,19 @@ namespace MyMovieWatchlist.Services
         /// <returns>Movie</returns>
         public Movie ReadOneMovieFromDatabase(int id)
         {
-            var movie = _moviesRepository.FindById(id);
+            Movie movie = _moviesRepository.FindById(id);
             return movie;
         }
 
         public ExtractionResult ReadAllMoviesFromDatabase()
         {
             ExtractionResult result = new ExtractionResult { Movies = _moviesRepository.List() };
+            return result;
+        }
+
+        public IEnumerable<Movie> ReadAllMoviesFromDatabase1()
+        {
+            var result = _moviesRepository.List();
             return result;
         }
 
