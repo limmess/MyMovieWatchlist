@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using MyMovieWatchlist.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace MyMovieWatchlist.Models
+namespace MyMovieWatchlist.Impl
 {
     public class ParseSearchResultToMoviesList
     {

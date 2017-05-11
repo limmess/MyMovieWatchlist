@@ -133,8 +133,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Impl\Helpers\SearchWebApiMovieByImdbId.cs" />
+    <Compile Include="Impl\ConvertJsonToMovieList.cs" />
     <Compile Include="Impl\OmdbRepository.cs" />
+    <Compile Include="Impl\ParseSearchResultToMoviesList.cs" />
     <Compile Include="Interfaces\IWebApiRepository.cs" />
     <Compile Include="Migrations\201704091442089_InitialCreate.cs" />
     <Compile Include="Migrations\201704091442089_InitialCreate.Designer.cs">
@@ -157,15 +158,10 @@
       <DependentUpon>201704121841509_ChangeMovieModelParentIDNullable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ConvertJsonMovieList.cs" />
-    <Compile Include="Models\ExtractionResult.cs" />
     <Compile Include="Services\DatabaseService.cs" />
     <Compile Include="Interfaces\IMoviesRepository.cs" />
-    <Compile Include="Models\ParseSearchResultToMoviesList.cs" />
-    <Compile Include="Models\ReadMoviesFromApiToMoviesList.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Impl\SqlMoviesRepository.cs" />
-    <Compile Include="Services\Helpers\SearchWebApiMovieByImdbIdToList.cs" />
     <Compile Include="Services\WebApiService.cs" />
     <Compile Include="ViewModels\MovieSearchedListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -214,6 +210,8 @@
     <Content Include="Views\Home\Movie.cshtml" />
     <Content Include="Views\Home\Delete.cshtml" />
     <Content Include="Views\Home\SearchResult.cshtml" />
+    <Content Include="Views\Home\MovieNotFound.cshtml" />
+    <Content Include="Views\Home\IncorrectImdbID.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

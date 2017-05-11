@@ -10,5 +10,6 @@ namespace MyMovieWatchlist.Interfaces
         Task<string> SearchMovieByImdbId(string imdbId);
         Task<string> SearchMovieByName(string movieName);
         IEnumerable<string> AddMoviesInfo(IEnumerable<Movie> moviesImdbIdFromDatabaseList);
+        bool ResponseIsValid(string searchResponseInJson);
     }
 }

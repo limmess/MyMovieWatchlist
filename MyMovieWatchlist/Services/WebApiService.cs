@@ -38,5 +38,16 @@ namespace MyMovieWatchlist.Services
 
 
 
+        /// <summary>
+        /// Check if Web API search response is valid (True) or nothing is found/error (False)
+        /// </summary>
+        /// <param name="searchResponseInJson">Web API response</param>
+        /// <returns></returns>
+        public bool ResponseIsValid(string searchResponseInJson)
+        {
+            bool response = _webApiRepository.ResponseIsValid(searchResponseInJson);
+            return response;
+        }
+
     }
 }

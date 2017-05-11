@@ -15,7 +15,7 @@ namespace MyMovieWatchlist.Services
         }
 
         /// <summary>
-        /// Constructor
+        /// Constructor. Initializes SqlMoviesRepository
         /// </summary>
         public DatabaseService() : this(new SqlMoviesRepository())
         {
@@ -58,31 +58,14 @@ namespace MyMovieWatchlist.Services
             return movie;
         }
 
-        public ExtractionResult ReadAllMoviesFromDatabase()
-        {
-            ExtractionResult result = new ExtractionResult { Movies = _moviesRepository.List() };
-            return result;
-        }
-
-        public IEnumerable<Movie> ReadAllMoviesFromDatabase1()
+        /// <summary>
+        /// Read all movies from database
+        /// </summary>
+        /// <returns>Movie list</returns>
+        public IEnumerable<Movie> ReadAllMoviesFromDatabase()
         {
             var result = _moviesRepository.List();
             return result;
-        }
-
-        /// <summary>
-        /// Reads all movies from database and reads additional movie info from Web API
-        /// </summary>
-        /// <returns> Movies list</returns>
-        public List<Movie> ReadAllMoviesFromDatabaseAddWebApiInfo()
-        {
-            SearchWebApiMovieByImdbIdToList searchWebApiMovieByImdbIdToList = new SearchWebApiMovieByImdbIdToList();
-            ConvertJsonMovieList convertJsonMovieList = new ConvertJsonMovieList();
-
-            IEnumerable<Movie> dbMovieList = _moviesRepository.List();
-            List<string> jsonMovieListFromWebApi = searchWebApiMovieByImdbIdToList.GetValue((List<Movie>)dbMovieList).Result;
-            List<Movie> moviesView = convertJsonMovieList.Convert(jsonMovieListFromWebApi);
-            return moviesView;
         }
     }
 }

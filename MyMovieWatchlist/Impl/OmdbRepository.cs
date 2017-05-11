@@ -1,5 +1,7 @@
 ﻿using MyMovieWatchlist.Interfaces;
 using MyMovieWatchlist.Models;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
@@ -36,12 +38,26 @@ namespace MyMovieWatchlist.Impl
             {
                 string builtUri = BuildSearchStringImdbId(movie.imdbID);
                 Task<string> result = QueryWebApi(builtUri);
-                //string result = SearchMovieByImdbId(movie.imdbID).Result;
                 moviesWithFullInfoJsonList.Add(result.Result);
             }
 
             return moviesWithFullInfoJsonList;
         }
+
+        public bool ResponseIsValid(string searchResponseInJson)
+        {
+            // Parse to JSON object
+            JObject jObject = JObject.Parse(searchResponseInJson);
+
+            //Extract from search response movies - Object "Response"
+            string response = jObject.SelectToken("Response").ToString();
+
+            //Convert string to Bool
+            bool boolVal = Convert.ToBoolean(response);
+
+            return boolVal;
+        }
+
 
         #region Helpers
 
@@ -50,7 +66,6 @@ namespace MyMovieWatchlist.Impl
             HttpResponseMessage response = await _client.GetAsync(builtUri).ConfigureAwait(continueOnCapturedContext: false);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            _client.Dispose();
             return responseBody;
         }
 
@@ -68,6 +83,8 @@ namespace MyMovieWatchlist.Impl
             string uri = _uriByName.Append(movieName).ToString();
             return uri;
         }
+
+
 
         #endregion Helpers
     }
