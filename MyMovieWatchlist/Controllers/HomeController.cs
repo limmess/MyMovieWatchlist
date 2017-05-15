@@ -17,6 +17,7 @@ namespace MyMovieWatchlist.Controllers
         private readonly DatabaseService _myDatabaseService = new DatabaseService();
         private readonly ParseSearchResultToMoviesList _parseSearchResultToMoviesList = new ParseSearchResultToMoviesList();
         private readonly ConvertJsonToMovieList _convertJsonToMovieList = new ConvertJsonToMovieList();
+        private readonly ErrorViewModel _error = new ErrorViewModel();
 
         public ActionResult Index()
         {
@@ -34,7 +35,8 @@ namespace MyMovieWatchlist.Controllers
 
             if (!_myWebApiService.ResponseIsValid(searchByNameResultInJson))
             {
-                return View("MovieNotFound");
+                _error.ErrorMessage = "Movie Not Found !!!";
+                return View("Error", _error);
             }
 
             //Convert JSON search result to movie list
@@ -49,26 +51,26 @@ namespace MyMovieWatchlist.Controllers
         [Route("Home/Movie/{SelectedMovieImdbId}")]
         public ActionResult Movie(string SelectedMovieImdbId)
         {
+
+            //prevent to view movies that are not in MyWatchlist
             try
             {
                 var tt = _myDatabaseService.ReadAllMoviesFromDatabase().SingleOrDefault(m => m.imdbID == SelectedMovieImdbId).imdbID;
             }
             catch (Exception e)
             {
-                return View("IncorrectImdbID");
+                _error.ErrorMessage = "Movie is not in MyWatchlist";
+                return View("Error", _error);
             }
-
-
 
             //Search  movie by ImdbId
             string searchResult = _myWebApiService.SearchMovieByImdbId(SelectedMovieImdbId);
 
-
             if (!_myWebApiService.ResponseIsValid(searchResult))
             {
-                return View("IncorrectImdbID");
+                _error.ErrorMessage = "Incorrect IMDb ID";
+                return View("Error", _error);
             }
-
 
             //Deserialize found movie in JSON format to Movie object
             Movie movie = (Movie)JsonConvert.DeserializeObject(searchResult, typeof(Movie));
@@ -91,16 +93,16 @@ namespace MyMovieWatchlist.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Save(Movie movie)
+        public ActionResult Save([Bind(Include = "Id,ParentId,Title,Year,Rated,Released,Runtime,Genre,Director,Writer,Actors,Plot,Language,Country,Awards,Poster,Metascore,imdbRating,imdbVotes,imdbID,Type,DVD,BoxOffice,Production,Website,Response,SelectedForSave")]Movie movie)
         {
-            if (ModelState.IsValid)
+            if (_myDatabaseService.ReadAllMoviesFromDatabase().Any(m => m.imdbID == movie.imdbID))
             {
-                _myDatabaseService.AddMovie(movie);
-                _myDatabaseService.SaveChanges();
-                return RedirectToAction("Index");
+                _error.ErrorMessage = "Movie is already in MyWatchlist";
+                return View("Error", _error);
             }
-
-            return View(movie);
+            _myDatabaseService.AddMovie(movie);
+            _myDatabaseService.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Movies/Delete/5
@@ -111,13 +113,20 @@ namespace MyMovieWatchlist.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Movie movie = _myDatabaseService.ReadOneMovieFromDatabase(id.Value);
+            Movie movieInDb = _myDatabaseService.ReadOneMovieFromDatabase(id.Value);
 
-            if (movie == null)
+            if (movieInDb == null)
             {
                 return HttpNotFound();
             }
-            return View(movie);
+
+            //Search  movie by ImdbId
+            string searchResult = _myWebApiService.SearchMovieByImdbId(movieInDb.imdbID);
+
+            //Deserialize found movie in JSON format to Movie object
+            Movie movieFull = (Movie)JsonConvert.DeserializeObject(searchResult, typeof(Movie));
+
+            return View(movieFull);
         }
 
         // POST: Movies/Delete/5
@@ -131,5 +140,3 @@ namespace MyMovieWatchlist.Controllers
         }
     }
 }
-
-//[Bind(Include = "Id,ParentId,Title,Year,Rated,Released,Runtime,Genre,Director,Writer,Actors,Plot,Language,Country,Awards,Poster,Metascore,imdbRating,imdbVotes,imdbID,Type,DVD,BoxOffice,Production,Website,Response,SelectedForSave")]

@@ -1,41 +1,42 @@
 ﻿@model IEnumerable<MyMovieWatchlist.Models.Movie>
 
-@{
+    @{
     ViewBag.Title = "My Movies";
-}
+    }
 
-<h2>My Movies</h2>
+    <h2>My Movies</h2>
 
-<p>
-    @using (Html.BeginForm())
-    {
+    <p>
+        @using (Html.BeginForm())
+        {
         <div>
             Search Movie
         </div>
-        
+
         @Html.TextBox("search")
 
         <input type="submit" value="Search" class="btn btn-default" />
-    }
-</p>
+        }
+    </p>
 
-<table class="table">
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.Title)</th>
-        <th>@Html.DisplayNameFor(model => model.ParentId)</th>
-        <th>@Html.DisplayNameFor(model => model.imdbID)</th>
-        <th>Action</th>
-    </tr>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Title)</th>
+            <th>@Html.DisplayNameFor(model => model.ParentId)</th>
+            <th>@Html.DisplayNameFor(model => model.imdbID)</th>
+            <th>Action</th>
+        </tr>
 
-    @foreach (var item in Model)
-    {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.Title)</td>
             <td>@Html.DisplayFor(modelItem => item.ParentId)</td>
             <td>@Html.DisplayFor(modelItem => item.imdbID)</td>
-            <td>@Html.ActionLink("Details", "Movie", new { SelectedMovieImdbId = item.imdbID }) |
+            <td>
+                @Html.ActionLink("Details", "Movie", new { SelectedMovieImdbId = item.imdbID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
-    }
-</table>
+        }
+    </table>

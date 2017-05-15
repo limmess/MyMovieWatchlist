@@ -1,0 +1,12 @@
+﻿@model MyMovieWatchlist.ViewModels.ErrorViewModel
+
+@{
+    ViewBag.Title = Model.ErrorMessage;
+}
+
+<h2>@Model.ErrorMessage</h2>
+<p>
+<div class="row">
+@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+</div>
+

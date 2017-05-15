@@ -23,6 +23,11 @@ namespace MyMovieWatchlist.Impl
             return result;
         }
 
+        /// <summary>
+        /// Search Movie By Name
+        /// </summary>
+        /// <param name="movieName">Search string</param>
+        /// <returns>Result in JSON. Success=(3 objects: Search, totalResults, Response). Error=(2 objects: Response, Error)</returns>
         public Task<string> SearchMovieByName(string movieName)
         {
             string builtUri = BuildSearchStringMovieName(movieName);
