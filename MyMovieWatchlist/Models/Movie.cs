@@ -6,7 +6,11 @@ namespace MyMovieWatchlist.Models
     public class Movie
     {
         public int Id { get; set; }
-        public int? ParentId { get; set; }
+
+        //public int? ParentId { get; set; }
+
+        public int SiteMenuId { get; set; }
+        public virtual SiteMenu SiteMenu { get; set; }
 
         [NotMapped]
         public string Title { get; set; }

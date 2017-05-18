@@ -7,7 +7,7 @@ namespace MyMovieWatchlist.ViewModels
         public SelectedMovieDetailsViewModel(Movie movie)
         {
             Id = movie.Id;
-            ParentId = movie.ParentId;
+            //ParentId = movie.ParentId;
             Title = movie.Title;
             Year = movie.Year;
             Rated = movie.Rated;

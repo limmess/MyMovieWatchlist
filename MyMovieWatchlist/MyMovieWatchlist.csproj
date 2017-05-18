@@ -157,7 +157,52 @@
     <Compile Include="Migrations\201704121841509_ChangeMovieModelParentIDNullable.Designer.cs">
       <DependentUpon>201704121841509_ChangeMovieModelParentIDNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705181849046_AddSiteMenu.cs" />
+    <Compile Include="Migrations\201705181849046_AddSiteMenu.Designer.cs">
+      <DependentUpon>201705181849046_AddSiteMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705182013161_AddMovieMenuIDSiteMenu.cs" />
+    <Compile Include="Migrations\201705182013161_AddMovieMenuIDSiteMenu.Designer.cs">
+      <DependentUpon>201705182013161_AddMovieMenuIDSiteMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705182035254_test.cs" />
+    <Compile Include="Migrations\201705182035254_test.Designer.cs">
+      <DependentUpon>201705182035254_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705182037035_test1.cs" />
+    <Compile Include="Migrations\201705182037035_test1.Designer.cs">
+      <DependentUpon>201705182037035_test1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705182047148_test2.cs" />
+    <Compile Include="Migrations\201705182047148_test2.Designer.cs">
+      <DependentUpon>201705182047148_test2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705182049319_test3.cs" />
+    <Compile Include="Migrations\201705182049319_test3.Designer.cs">
+      <DependentUpon>201705182049319_test3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705182054195_test4.cs" />
+    <Compile Include="Migrations\201705182054195_test4.Designer.cs">
+      <DependentUpon>201705182054195_test4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705182058230_test5.cs" />
+    <Compile Include="Migrations\201705182058230_test5.Designer.cs">
+      <DependentUpon>201705182058230_test5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705182104095_AddSiteMenuAgain.cs" />
+    <Compile Include="Migrations\201705182104095_AddSiteMenuAgain.Designer.cs">
+      <DependentUpon>201705182104095_AddSiteMenuAgain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705182105309_AddMovieSiteMenuId.cs" />
+    <Compile Include="Migrations\201705182105309_AddMovieSiteMenuId.Designer.cs">
+      <DependentUpon>201705182105309_AddMovieSiteMenuId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705182108009_AddMovieSiteMenu.cs" />
+    <Compile Include="Migrations\201705182108009_AddMovieSiteMenu.Designer.cs">
+      <DependentUpon>201705182108009_AddMovieSiteMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\SiteMenu.cs" />
     <Compile Include="Services\DatabaseService.cs" />
     <Compile Include="Interfaces\IMoviesRepository.cs" />
     <Compile Include="Models\Movie.cs" />
@@ -176,8 +221,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ui-icons_454545_256x240.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="App_Code\TreeView.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -214,6 +261,7 @@
     <Content Include="Views\Home\MovieNotFound.cshtml" />
     <Content Include="Views\Home\IncorrectImdbID.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\Simple.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -241,6 +289,39 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704121841509_ChangeMovieModelParentIDNullable.resx">
       <DependentUpon>201704121841509_ChangeMovieModelParentIDNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705181849046_AddSiteMenu.resx">
+      <DependentUpon>201705181849046_AddSiteMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705182013161_AddMovieMenuIDSiteMenu.resx">
+      <DependentUpon>201705182013161_AddMovieMenuIDSiteMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705182035254_test.resx">
+      <DependentUpon>201705182035254_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705182037035_test1.resx">
+      <DependentUpon>201705182037035_test1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705182047148_test2.resx">
+      <DependentUpon>201705182047148_test2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705182049319_test3.resx">
+      <DependentUpon>201705182049319_test3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705182054195_test4.resx">
+      <DependentUpon>201705182054195_test4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705182058230_test5.resx">
+      <DependentUpon>201705182058230_test5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705182104095_AddSiteMenuAgain.resx">
+      <DependentUpon>201705182104095_AddSiteMenuAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705182105309_AddMovieSiteMenuId.resx">
+      <DependentUpon>201705182105309_AddMovieSiteMenuId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705182108009_AddMovieSiteMenu.resx">
+      <DependentUpon>201705182108009_AddMovieSiteMenu.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

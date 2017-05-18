@@ -22,7 +22,7 @@
     <table class="table">
         <tr>
             <th>@Html.DisplayNameFor(model => model.Title)</th>
-            <th>@Html.DisplayNameFor(model => model.ParentId)</th>
+            @*<th>@Html.DisplayNameFor(model => model.ParentId)</th>*@
             <th>@Html.DisplayNameFor(model => model.imdbID)</th>
             <th>Action</th>
         </tr>
@@ -31,7 +31,7 @@
         {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.Title)</td>
-            <td>@Html.DisplayFor(modelItem => item.ParentId)</td>
+            @*<td>@Html.DisplayFor(modelItem => item.ParentId)</td>*@
             <td>@Html.DisplayFor(modelItem => item.imdbID)</td>
             <td>
                 @Html.ActionLink("Details", "Movie", new { SelectedMovieImdbId = item.imdbID }) |

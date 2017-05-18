@@ -1,4 +1,5 @@
-﻿using MyMovieWatchlist.Impl;
+﻿using MyMovieWatchlist.DAL;
+using MyMovieWatchlist.Impl;
 using MyMovieWatchlist.Models;
 using MyMovieWatchlist.Services;
 using MyMovieWatchlist.ViewModels;
@@ -18,6 +19,22 @@ namespace MyMovieWatchlist.Controllers
         private readonly ParseSearchResultToMoviesList _parseSearchResultToMoviesList = new ParseSearchResultToMoviesList();
         private readonly ConvertJsonToMovieList _convertJsonToMovieList = new ConvertJsonToMovieList();
         private readonly ErrorViewModel _error = new ErrorViewModel();
+
+
+        public ActionResult Simple()
+        {
+            List<SiteMenu> all = new List<SiteMenu>();
+            using (MovieDBContext dc = new MovieDBContext())
+            {
+                //all = dc.SiteMenus.OrderBy(a => a.ParentMenuId).Include(m => m.Movies).ToList();
+                all = dc.SiteMenus.OrderBy(a => a.ParentMenuId).ToList();
+            }
+            return View(all);
+        }
+
+
+
+
 
         public ActionResult Index()
         {
