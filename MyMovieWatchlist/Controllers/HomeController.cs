@@ -6,6 +6,7 @@ using MyMovieWatchlist.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -26,8 +27,8 @@ namespace MyMovieWatchlist.Controllers
             List<SiteMenu> all = new List<SiteMenu>();
             using (MovieDBContext dc = new MovieDBContext())
             {
-                //all = dc.SiteMenus.OrderBy(a => a.ParentMenuId).Include(m => m.Movies).ToList();
-                all = dc.SiteMenus.OrderBy(a => a.ParentMenuId).ToList();
+                all = dc.SiteMenus.OrderBy(a => a.ParentMenuId).Include(m => m.Movies).ToList();
+                //all = dc.SiteMenus.OrderBy(a => a.ParentMenuId).ToList();
             }
             return View(all);
         }

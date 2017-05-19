@@ -1,24 +1,42 @@
 ﻿@model List<MyMovieWatchlist.Models.SiteMenu>
 
-    @{
-        ViewBag.Title = "Simple";
-    }
+@{
+    ViewBag.Title = "Simple";
+}
 
-    <h2>Simple</h2>
+<h2>Simple</h2>
 
-    
-
-    <div>
-        <div class="treeview1">
-            @if (Model != null && Model.Count() > 0)
+<div>
+    <div class="treeview1">
+        @if (Model != null && Model.Count() > 0)
             {
-                <ul>
-                    @TreeView.GetTreeView(Model, Model.FirstOrDefault().ParentMenuId)
-                </ul>
-            }
-        </div>
+            <ul>
+                @TreeView.GetTreeView(Model, Model.FirstOrDefault().ParentMenuId)
+            </ul>
+        }
     </div>
+</div>
 
+<p></p>
+
+@foreach (var i in Model)
+{
+    <ul>
+        <li>
+            @Html.DisplayFor(a => i.MenuName)
+        </li>
+
+        <ul>
+            @foreach (var item in i.Movies)
+                {
+                <li>
+                    @Html.DisplayFor(b => item.imdbID)
+                </li>
+
+            }
+        </ul>
+    </ul>
+}
 
 <style>
     .collapse1 {
@@ -62,19 +80,15 @@
         }
 </style>
 
-
-
-
-
 @section Scripts{
-        <script>
-            $(document).ready(function () {
-                $(".treeview1 li>ul").css('display', 'none'); // Hide all 2-level ul
-                $(".collapsible").click(function (e) {
-                    e.preventDefault();
-                    $(this).toggleClass("collapse1 expand1");
-                    $(this).closest('li').children('ul').slideToggle();
-                });
+    <script>
+        $(document).ready(function () {
+            $(".treeview1 li>ul").css('display', 'none'); // Hide all 2-level ul
+            $(".collapsible").click(function (e) {
+                e.preventDefault();
+                $(this).toggleClass("collapse1 expand1");
+                $(this).closest('li').children('ul').slideToggle();
             });
-        </script>
-    }
+        });
+    </script>
+}

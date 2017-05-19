@@ -1,6 +1,7 @@
-﻿@helper GetTreeView(List<MyMovieWatchlist.Models.SiteMenu> siteMenu, int parentID)
+﻿@using MyMovieWatchlist.Models
+@helper GetTreeView(List<MyMovieWatchlist.Models.SiteMenu> siteMenu, int parentID)
 {
-foreach (var i in siteMenu.Where(a => a.ParentMenuId.Equals(parentID)))
+foreach (SiteMenu i in siteMenu.Where(a => a.ParentMenuId.Equals(parentID)))
 {
         <li>
             @{ var submenu = siteMenu.Count(a => a.ParentMenuId.Equals(i.Id));}
