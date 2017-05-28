@@ -1,4 +1,5 @@
-﻿@model List<MyMovieWatchlist.Models.SiteMenu>
+﻿@using MyMovieWatchlist.Models
+@model List<MyMovieWatchlist.Models.SiteMenu>
 
 @{
     ViewBag.Title = "Simple";
@@ -8,7 +9,7 @@
 
 <div>
     <div class="treeview1">
-        @if (Model != null && Model.Count() > 0)
+        @if (Model != null && Model.Any())
             {
             <ul>
                 @TreeView.GetTreeView(Model, Model.FirstOrDefault().ParentMenuId)
@@ -17,26 +18,7 @@
     </div>
 </div>
 
-<p></p>
 
-@foreach (var i in Model)
-{
-    <ul>
-        <li>
-            @Html.DisplayFor(a => i.MenuName)
-        </li>
-
-        <ul>
-            @foreach (var item in i.Movies)
-                {
-                <li>
-                    @Html.DisplayFor(b => item.imdbID)
-                </li>
-
-            }
-        </ul>
-    </ul>
-}
 
 <style>
     .collapse1 {

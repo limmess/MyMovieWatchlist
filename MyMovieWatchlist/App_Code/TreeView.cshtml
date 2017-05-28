@@ -1,29 +1,41 @@
 ﻿@using MyMovieWatchlist.Models
+@using WebGrease.Css.Extensions
 @helper GetTreeView(List<MyMovieWatchlist.Models.SiteMenu> siteMenu, int parentID)
 {
 foreach (SiteMenu i in siteMenu.Where(a => a.ParentMenuId.Equals(parentID)))
-{
-        <li>
-            @{ var submenu = siteMenu.Count(a => a.ParentMenuId.Equals(i.Id));}
-            @if (submenu > 0)
-            {
-                <span class="collapse1 collapsible">&nbsp;</span>
-            }
-            else
-            {
-                <span style="width:15px; display:inline-block">&nbsp;</span>
-            }
-            <span>
-                <a href="@i.NavUrl">@i.MenuName</a>
-            </span>
-            @if (submenu > 0)
-            {
-                <ul>
-                    @TreeView.GetTreeView(siteMenu, i.Id)
+    {
+            <li>
+                @{ var submenu = siteMenu.Count(a => a.ParentMenuId.Equals(i.Id));}
 
-                </ul>
-            }
-        </li>
+                @if (submenu > 0)
+                {
+                    <span class="collapse1 collapsible">&nbsp;</span>
                 }
+                else
+                {
+                    <span style="width:15px; display:inline-block">&nbsp;</span>
+                }
+
+                <span>
+                    <a href="@i.NavUrl">@i.MenuName</a>
+                 </span>
+
+                 @if (submenu > 0)
+                    {
+                        <ul>
+                            @TreeView.GetTreeView(siteMenu, i.Id)
+                            @if (i.Movies.Count > 0)
+                                {
+                                    foreach (var movie in i.Movies)
+                                    {
+                                        <li>
+                                            <a href="@i.NavUrl">@movie.imdbID</a>
+                                        </li>
+                                    }
+                                }
+                        </ul>
+                    }
+            </li>
+    }
 }
 
