@@ -1,12 +1,10 @@
-﻿using MyMovieWatchlist.DAL;
-using MyMovieWatchlist.Impl;
+﻿using MyMovieWatchlist.Impl;
 using MyMovieWatchlist.Models;
 using MyMovieWatchlist.Services;
 using MyMovieWatchlist.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -24,25 +22,56 @@ namespace MyMovieWatchlist.Controllers
 
         public ActionResult Simple()
         {
-            List<SiteMenu> all = new List<SiteMenu>();
-            using (MovieDBContext dc = new MovieDBContext())
+
+            //List<SiteMenu> all = new List<SiteMenu>();
+            //using (MovieDBContext dc = new MovieDBContext())
+            //{
+            //    all = dc.SiteMenus.OrderBy(a => a.ParentMenuId).Include(m => m.Movies).ToList();
+            //}
+            IEnumerable<SiteMenu> directories = _myDatabaseService.ReadSiteMenusFromDatabse();
+            List<SiteMenu> directoriesSorted = directories.OrderBy(a => a.ParentMenuId).ToList();
+
+
+            foreach (var directory in directoriesSorted)
             {
-                all = dc.SiteMenus.OrderBy(a => a.ParentMenuId).Include(m => m.Movies).ToList();
-                //all = dc.SiteMenus.OrderBy(a => a.ParentMenuId).ToList();
+                List<Movie> movieList = directory.Movies.ToList();
+
+                foreach (var movie in movieList)
+                {
+                    var searchResult = _myWebApiService.SearchMovieByImdbId(movie.imdbID);
+
+                    //Deserialize found movie in JSON format to Movie object
+                    Movie movie1 = (Movie)JsonConvert.DeserializeObject(searchResult, typeof(Movie));
+
+                    movie.Title = movie1.Title;
+                }
             }
-            return View(all);
+
+
+            return View(directoriesSorted);
         }
-
-
-
 
 
         public ActionResult Index()
         {
+            IEnumerable<SiteMenu> directories = _myDatabaseService.ReadSiteMenusFromDatabse();
+            List<SiteMenu> directoriesSorted = directories.OrderBy(a => a.ParentMenuId).ToList();
             IEnumerable<Movie> moviesFromDatabaseOnlyImdbId = _myDatabaseService.ReadAllMoviesFromDatabase();
             IEnumerable<string> moviesFromDatabaseWithInfoFromWebJson = _myWebApiService.AddMoviesInfo(moviesFromDatabaseOnlyImdbId);
             IEnumerable<Movie> movies = _convertJsonToMovieList.Convert((List<string>)moviesFromDatabaseWithInfoFromWebJson);
-            return View(movies);
+
+
+            foreach (var directory in directoriesSorted)
+            {
+                List<Movie> movieList = directory.Movies.ToList();
+
+                foreach (Movie movie in movieList)
+                {
+                    movie.Title = movies.Single(a => a.imdbID == movie.imdbID).Title;
+                }
+            }
+
+            return View(directoriesSorted);
         }
 
         [HttpPost]

@@ -12,7 +12,7 @@
         @if (Model != null && Model.Any())
             {
             <ul>
-                @TreeView.GetTreeView(Model, Model.FirstOrDefault().ParentMenuId)
+                @TreeView.GetTreeView(Model, Model.FirstOrDefault().ParentMenuId,this.Html)
             </ul>
         }
     </div>

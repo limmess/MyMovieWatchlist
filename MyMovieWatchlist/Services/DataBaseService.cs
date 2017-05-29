@@ -64,8 +64,23 @@ namespace MyMovieWatchlist.Services
         /// <returns>Movie list</returns>
         public IEnumerable<Movie> ReadAllMoviesFromDatabase()
         {
-            var result = _moviesRepository.List();
+            IEnumerable<Movie> result = _moviesRepository.MoviesList();
             return result;
         }
+
+        /// <summary>
+        /// Read all directories from database
+        /// </summary>
+        /// <returns>Direcotry list</returns>
+        public IEnumerable<SiteMenu> ReadSiteMenusFromDatabse()
+        {
+            IEnumerable<SiteMenu> result = _moviesRepository.SiteMenusList();
+            return result;
+        }
+
+
+
+
+
     }
 }

@@ -2,6 +2,7 @@ using MyMovieWatchlist.DAL;
 using MyMovieWatchlist.Interfaces;
 using MyMovieWatchlist.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace MyMovieWatchlist.Impl
@@ -10,14 +11,14 @@ namespace MyMovieWatchlist.Impl
     {
         private readonly MovieDBContext _db = new MovieDBContext();
 
-        public IEnumerable<Movie> List()
+        public IEnumerable<Movie> MoviesList()
         {
             return _db.Movies.ToList();
         }
 
         public Movie FindById(int id)
         {
-            var movie = _db.Movies.Find(id);
+            Movie movie = _db.Movies.Find(id);
             return movie;
         }
 
@@ -35,6 +36,12 @@ namespace MyMovieWatchlist.Impl
         public void SaveChanges()
         {
             _db.SaveChanges();
+        }
+
+        public IEnumerable<SiteMenu> SiteMenusList()
+        {
+            var result = _db.SiteMenus.Include(m => m.Movies).ToList();
+            return result;
         }
     }
 }

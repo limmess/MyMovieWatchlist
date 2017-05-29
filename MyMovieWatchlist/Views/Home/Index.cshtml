@@ -1,4 +1,86 @@
-﻿@model IEnumerable<MyMovieWatchlist.Models.Movie>
+﻿@using MyMovieWatchlist.Models
+@model List<MyMovieWatchlist.Models.SiteMenu>
+
+@{
+    ViewBag.Title = "My Movies";
+}
+
+<h2>My Movies</h2>
+
+<div>
+    <div class="treeview1">
+        @if (Model != null && Model.Any())
+            {
+            <ul>
+                @TreeView.GetTreeView(Model, Model.FirstOrDefault().ParentMenuId,this.Html)
+            </ul>
+        }
+    </div>
+</div>
+
+
+
+<style>
+    .collapse1 {
+        width: 15px;
+        background-image: url('../Images/ui-icons_454545_256x240.png');
+        background-repeat: no-repeat;
+        background-position: -36px -17px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .expand1 {
+        width: 15px;
+        background-image: url('../Images/ui-icons_454545_256x240.png');
+        background-repeat: no-repeat;
+        background-position: -50px -17px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .treeview1 ul {
+        font: 14px Arial, Sans-Serif;
+        margin: 0px;
+        padding-left: 20px;
+        list-style: none;
+    }
+
+    .treeview1 > li > a {
+        font-weight: bold;
+    }
+
+    .treeview1 li {
+    }
+
+        .treeview1 li a {
+            padding: 4px;
+            font-size: 12px;
+            display: inline-block;
+            text-decoration: none;
+            width: auto;
+        }
+</style>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".treeview1 li>ul").css('display', 'none'); // Hide all 2-level ul
+            $(".collapsible").click(function (e) {
+                e.preventDefault();
+                $(this).toggleClass("collapse1 expand1");
+                $(this).closest('li').children('ul').slideToggle();
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+@*@model IEnumerable<MyMovieWatchlist.Models.Movie>
 
     @{
     ViewBag.Title = "My Movies";
@@ -22,7 +104,7 @@
     <table class="table">
         <tr>
             <th>@Html.DisplayNameFor(model => model.Title)</th>
-            @*<th>@Html.DisplayNameFor(model => model.ParentId)</th>*@
+            <th>@Html.DisplayNameFor(model => model.SiteMenuId)</th>
             <th>@Html.DisplayNameFor(model => model.imdbID)</th>
             <th>Action</th>
         </tr>
@@ -31,7 +113,7 @@
         {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.Title)</td>
-            @*<td>@Html.DisplayFor(modelItem => item.ParentId)</td>*@
+            <td>@Html.DisplayFor(modelItem => item.SiteMenuId)</td>
             <td>@Html.DisplayFor(modelItem => item.imdbID)</td>
             <td>
                 @Html.ActionLink("Details", "Movie", new { SelectedMovieImdbId = item.imdbID }) |
@@ -39,4 +121,4 @@
             </td>
         </tr>
         }
-    </table>
+    </table>*@

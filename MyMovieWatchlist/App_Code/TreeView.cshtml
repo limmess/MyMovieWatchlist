@@ -1,13 +1,22 @@
-﻿@using MyMovieWatchlist.Models
+﻿@using System;
+@using System.Web;
+@using System.Web.Mvc;
+@using System.Web.Mvc.Html;
+@using System.Web.Razor.Parser.SyntaxTree
+@using System.Web.Services.Description
+@using System.Web.UI.WebControls
+@using Microsoft.Ajax.Utilities
+@using MyMovieWatchlist.Models
+@using MyMovieWatchlist.Controllers
 @using WebGrease.Css.Extensions
-@helper GetTreeView(List<MyMovieWatchlist.Models.SiteMenu> siteMenu, int parentID)
+@helper GetTreeView(List<MyMovieWatchlist.Models.SiteMenu> siteMenu, int parentId, System.Web.Mvc.HtmlHelper h)
 {
-foreach (SiteMenu i in siteMenu.Where(a => a.ParentMenuId.Equals(parentID)))
+foreach (SiteMenu i in siteMenu.Where(a => a.ParentMenuId.Equals(parentId)))
     {
             <li>
                 @{ var submenu = siteMenu.Count(a => a.ParentMenuId.Equals(i.Id));}
 
-                @if (submenu > 0)
+                @if (submenu > 0 || i.Movies.Any())
                 {
                     <span class="collapse1 collapsible">&nbsp;</span>
                 }
@@ -20,21 +29,27 @@ foreach (SiteMenu i in siteMenu.Where(a => a.ParentMenuId.Equals(parentID)))
                     <a href="@i.NavUrl">@i.MenuName</a>
                  </span>
 
-                 @if (submenu > 0)
-                    {
-                        <ul>
-                            @TreeView.GetTreeView(siteMenu, i.Id)
-                            @if (i.Movies.Count > 0)
-                                {
-                                    foreach (var movie in i.Movies)
-                                    {
-                                        <li>
-                                            <a href="@i.NavUrl">@movie.imdbID</a>
-                                        </li>
-                                    }
-                                }
-                        </ul>
-                    }
+                 @if (submenu > 0 || i.Movies.Any())
+                 {
+                     <ul>
+                         @if (submenu > 0)
+                         {
+                            @TreeView.GetTreeView(siteMenu, i.Id, h)
+                         }
+
+                         @if(i.Movies.Any())
+                         {
+                             foreach (var movie in i.Movies)
+                             {
+                                <li>
+                                    @h.ActionLink(@movie.Title, "Movie", "Home", new { SelectedMovieImdbId = movie.imdbID }, new {@style= "color:#fff8dc;font-weight: bold;text-decoration: underline" })
+                                    @*<a href="@i.NavUrl">@movie.Title (@movie.imdbID)</a>*@
+                                </li>
+                            }
+                         }
+
+                     </ul>
+                 }
             </li>
     }
 }
