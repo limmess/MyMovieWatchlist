@@ -185,5 +185,17 @@ namespace MyMovieWatchlist.Controllers
             _myDatabaseService.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
+        [HttpPost]
+        public ActionResult CreateDir(string dirName, string parentMenuId)
+        {
+            _myDatabaseService.AddDirectory(dirName, int.Parse(parentMenuId));
+            _myDatabaseService.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+
     }
 }

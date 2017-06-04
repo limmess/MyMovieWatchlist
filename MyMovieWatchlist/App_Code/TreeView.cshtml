@@ -26,7 +26,7 @@ foreach (SiteMenu i in siteMenu.Where(a => a.ParentMenuId.Equals(parentId)))
                 }
 
                 <span>
-                    <a href="@i.NavUrl">@i.MenuName</a>
+                    <a href="#">@i.MenuName</a>
                  </span>
 
                  @if (submenu > 0 || i.Movies.Any())

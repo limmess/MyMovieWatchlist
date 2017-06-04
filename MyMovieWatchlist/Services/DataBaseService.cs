@@ -27,7 +27,7 @@ namespace MyMovieWatchlist.Services
         /// <param name="movie">Movie to save to database</param>
         public void AddMovie(Movie movie)
         {
-            _moviesRepository.Add(movie);
+            _moviesRepository.AddMovie(movie);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace MyMovieWatchlist.Services
         /// <param name="id">Movie ID in database</param>
         public void DeleteMovie(int id)
         {
-            _moviesRepository.Delete(id);
+            _moviesRepository.DeleteMovie(id);
         }
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace MyMovieWatchlist.Services
             return result;
         }
 
-
-
-
-
+        public void AddDirectory(string dirName, int parentDirId)
+        {
+            _moviesRepository.AddDirectory(dirName, parentDirId);
+        }
     }
 }

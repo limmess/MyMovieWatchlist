@@ -7,8 +7,9 @@ namespace MyMovieWatchlist.Interfaces
     {
         IEnumerable<SiteMenu> SiteMenusList();
         IEnumerable<Movie> MoviesList();
-        void Add(Movie movie);
-        void Delete(int id);
+        void AddDirectory(string dirName, int parentDirId);
+        void AddMovie(Movie movie);
+        void DeleteMovie(int id);
         void SaveChanges();
         Movie FindById(int id);
     }
