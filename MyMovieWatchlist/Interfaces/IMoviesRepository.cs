@@ -8,9 +8,11 @@ namespace MyMovieWatchlist.Interfaces
         IEnumerable<SiteMenu> SiteMenusList();
         IEnumerable<Movie> MoviesList();
         void AddDirectory(string dirName, int parentDirId);
+        void DeleteDirectory(int id);
         void AddMovie(Movie movie);
         void DeleteMovie(int id);
         void SaveChanges();
         Movie FindById(int id);
+        Movie FindByImdbId(string imdbId);
     }
 }

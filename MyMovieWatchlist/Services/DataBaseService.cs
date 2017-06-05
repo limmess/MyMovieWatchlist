@@ -48,13 +48,26 @@ namespace MyMovieWatchlist.Services
         }
 
         /// <summary>
-        /// Read one movie from database
+        /// Read one movie from database by Id
         /// </summary>
         /// <param name="id">Movies id in database</param>
         /// <returns>Movie</returns>
         public Movie ReadOneMovieFromDatabase(int id)
         {
             Movie movie = _moviesRepository.FindById(id);
+            return movie;
+        }
+
+
+
+        /// <summary>
+        /// Read one movie from database by ImDbId
+        /// </summary>
+        /// <param name="imdbId">Movies id in database</param>
+        /// <returns>Movie</returns>
+        public Movie ReadOneMovieFromDatabase(string imdbId)
+        {
+            Movie movie = _moviesRepository.FindByImdbId(imdbId);
             return movie;
         }
 
@@ -81,6 +94,11 @@ namespace MyMovieWatchlist.Services
         public void AddDirectory(string dirName, int parentDirId)
         {
             _moviesRepository.AddDirectory(dirName, parentDirId);
+        }
+
+        public void DeleteDirectory(int id)
+        {
+            _moviesRepository.DeleteDirectory(id);
         }
     }
 }

@@ -23,6 +23,13 @@ namespace MyMovieWatchlist.Impl
             return movie;
         }
 
+        public Movie FindByImdbId(string imdbId)
+        {
+            Movie movie = _db.Movies.FirstOrDefault(m => m.imdbID == imdbId);
+
+            return movie;
+        }
+
         public void AddMovie(Movie movie)
         {
             _db.Movies.Add(movie);
@@ -61,6 +68,12 @@ namespace MyMovieWatchlist.Impl
 
                 _db.SiteMenus.Add(new SiteMenu() { MenuName = dirName, ParentMenuId = parentDirId, NavUrl = navUrl });
             }
+        }
+
+        public void DeleteDirectory(int id)
+        {
+            SiteMenu siteMenuToDelete = _db.SiteMenus.First(m => m.Id == id);
+            _db.SiteMenus.Remove(siteMenuToDelete);
         }
     }
 }

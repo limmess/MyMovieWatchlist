@@ -122,8 +122,12 @@ namespace MyMovieWatchlist.Controllers
             //Deserialize found movie in JSON format to Movie object
             Movie movie = (Movie)JsonConvert.DeserializeObject(searchResult, typeof(Movie));
 
+            var movieFromDb = _myDatabaseService.ReadOneMovieFromDatabase(SelectedMovieImdbId);
+            movie.Id = movieFromDb.Id;
+
             //Pass movie to SelectedMovieDetailsViewModel
             SelectedMovieDetailsViewModel movieView = new SelectedMovieDetailsViewModel(movie);
+
             return View("Movie", movieView);
         }
 
@@ -153,7 +157,7 @@ namespace MyMovieWatchlist.Controllers
         }
 
         // GET: Movies/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteMovie(int? id)
         {
             if (id == null)
             {
@@ -172,14 +176,14 @@ namespace MyMovieWatchlist.Controllers
 
             //Deserialize found movie in JSON format to Movie object
             Movie movieFull = (Movie)JsonConvert.DeserializeObject(searchResult, typeof(Movie));
-
+            movieFull.Id = id.Value;
             return View(movieFull);
         }
 
         // POST: Movies/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteMovie")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteMovieConfirmed(int id)
         {
             _myDatabaseService.DeleteMovie(id);
             _myDatabaseService.SaveChanges();
@@ -196,6 +200,11 @@ namespace MyMovieWatchlist.Controllers
         }
 
 
-
+        public ActionResult DeleteDir(string directoryToDeleteId)
+        {
+            _myDatabaseService.DeleteDirectory(int.Parse(directoryToDeleteId));
+            _myDatabaseService.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

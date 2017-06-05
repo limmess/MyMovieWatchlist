@@ -117,6 +117,7 @@
 <div class="row">
     <div class="col-xs-1">
         @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Delete", "DeleteMovie", new { id=Model.Id }, new { @class = "btn btn-default" })
     </div>
 </div>
 

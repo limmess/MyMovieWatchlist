@@ -256,7 +256,7 @@
     <Content Include="Views\Movies\Index.cshtml" />
     <Content Include="Views\Home\SelectedMovieDetails.cshtml" />
     <Content Include="Views\Home\Movie.cshtml" />
-    <Content Include="Views\Home\Delete.cshtml" />
+    <Content Include="Views\Home\DeleteMovie.cshtml" />
     <Content Include="Views\Home\SearchResult.cshtml" />
     <Content Include="Views\Home\MovieNotFound.cshtml" />
     <Content Include="Views\Home\IncorrectImdbID.cshtml" />

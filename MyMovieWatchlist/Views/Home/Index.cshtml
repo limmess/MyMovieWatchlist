@@ -14,6 +14,10 @@
     List<SelectListItem> sortedListItems = listItems.OrderBy(d => d.Text).ToList();
 }
 
+@{
+    List<SelectListItem> listItemsDelete = Model.Select(m => new SelectListItem { Value = m.Id.ToString(), Text = m.NavUrl }).ToList();
+    List<SelectListItem> sortedListItemsDelete = listItems.OrderBy(d => d.Text).ToList();
+}
 
 
 
@@ -24,18 +28,30 @@
             Create Directory
         </div>
 
-        @Html.TextBox("dirName")
+        
         <p>
+            @Html.TextBox("dirName")
             @Html.DropDownList("parentMenuId", (IEnumerable<SelectListItem>)sortedListItems, "Select ...")
-            @*@Html.DropDownList("parentMenuId", (IEnumerable<SelectListItem>) Model.Select(m => new SelectListItem {Value = m.Id.ToString(), Text = m.NavUrl}).ToList(), "Select ...")*@
+            <input type="submit" value="New Directory" class="btn btn-default" />
         </p>
 
-    <input type="submit" value="New Directory" class="btn btn-default" />
+    
+    }
+
+<p>
+    @using (Html.BeginForm("DeleteDir", "Home"))
+    {
+        <div>Delete Directory</div>
+    <p>
+        @Html.DropDownList("directoryToDeleteId", (IEnumerable<SelectListItem>)sortedListItemsDelete, "Select ...")
+        <input type="submit" value="Delete" class="btn btn-default" />
+    </p>
     }
 
 
 
-    <p>
+
+<p>
         @using (Html.BeginForm())
         {
             <div>

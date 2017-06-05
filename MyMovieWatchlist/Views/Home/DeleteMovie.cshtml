@@ -88,7 +88,7 @@
         <dd>@Html.DisplayFor(model => model.Website)</dd>
     </dl>
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("DeleteMovie","Home"))
     {
         @Html.AntiForgeryToken()
 
